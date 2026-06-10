@@ -1,0 +1,34 @@
+// ============================================
+// CLIENTE PRISMA - SINGLETON PARA NEXT.JS
+// ============================================
+// Prisma 7 requiere un "Driver Adapter" para
+// conectarse a la base de datos. Usamos
+// @prisma/adapter-pg para PostgreSQL (Neon).
+//
+// El patrón Singleton evita que se creen
+// múltiples conexiones durante el Hot Reload.
+// ============================================
+
+import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+
+function createPrismaClient() {
+  const adapter = new PrismaPg({
+    connectionString: process.env.DATABASE_URL!,
+  });
+
+  return new PrismaClient({
+    adapter,
+    log: ["error"], // Desactivado "query" por privacidad y limpieza de consola
+  });
+}
+
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
+};
+
+export const prisma = globalForPrisma.prisma ?? createPrismaClient();
+
+if (process.env.NODE_ENV !== "production") {
+  globalForPrisma.prisma = prisma;
+}

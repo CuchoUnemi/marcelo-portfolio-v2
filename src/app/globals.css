@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+/* Definir la variante dark explícita para Tailwind v4 basada en clase */
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================
+   SISTEMA DE DISEÑO - VARIABLES CSS (:root)
+   ============================================
+   Paleta premium de alto contraste.
+   Cada sección tiene su propio color de acento
+   para crear una identidad visual clara.
+   ============================================ */
+
+:root, .light {
+  /* Fondos - Light Mode */
+  --color-bg-body:      #ffffff;
+  --color-bg-card:      #f8fafc;
+  --color-border-card:  #e2e8f0;
+
+  /* Textos - Light Mode */
+  --color-text-main:       #0f172a;
+  --color-text-secondary:  #475569;
+
+  /* Selección de texto */
+  --color-selection-bg:    color-mix(in srgb, var(--color-biography) 15%, transparent);
+  --color-selection-text:  #0f172a;
+
+  /* Acentos por sección (Compartidos o adaptados) */
+  --color-biography:        #9b51e0;   /* Lila más oscuro para contraste */
+  --color-experience:       #00b4d8;   /* Cian más oscuro */
+  --color-education:        #0284c7;   /* Azul Cielo más oscuro */
+  --color-certifications:   #e11d48;   /* Rosa/Rojo oscuro */
+  --color-skills:           #059669;   /* Verde Esmeralda oscuro */
+
+  /* Alias compatibles con componentes Tailwind */
+  --secondary: #9b51e0;
+  --accent:    #e11d48;
+}
+
+.dark {
+  /* Fondos - Dark Mode */
+  --color-bg-body:      #010409;
+  --color-bg-card:      #101524;
+  --color-border-card:  #1e2a3a;
+
+  /* Textos - Dark Mode */
+  --color-text-main:       #e6eff8;
+  --color-text-secondary:  #7d8590;
+
+  /* Selección de texto */
+  --color-selection-bg:    #bc8cff33;
+  --color-selection-text:  #e6eff8;
+
+  /* Acentos originales de alto contraste para fondo oscuro */
+  --color-biography:        #bc8cff;   
+  --color-experience:       #00f2ff;   
+  --color-education:        #38bdf8;   
+  --color-certifications:   #f43f5e;   
+  --color-skills:           #10b981;   
+
+  --secondary: #bc8cff;
+  --accent:    #f43f5e;
+}
+
+@theme inline {
+  --color-background:     var(--color-bg-body);
+  --color-foreground:     var(--color-text-main);
+  --color-primary:        var(--color-biography);
+  --color-primary-hover:  #a370f0;
+  --color-secondary:      var(--secondary);
+  --color-accent:         var(--accent);
+  --color-card:           var(--color-bg-card);
+  --color-card-border:    var(--color-border-card);
+  --color-text-secondary: var(--color-text-secondary);
+  --font-sans:            var(--font-geist-sans);
+  --font-mono:            var(--font-geist-mono);
+}
+
+/* ============================================
+   ESTILOS GLOBALES
+   ============================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg-body);
+  color: var(--color-text-main);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Tarjeta Premium */
+.premium-card {
+  background-color: var(--color-bg-card);
+  border: 1px solid var(--color-border-card);
+  border-radius: 1.5rem;   /* rounded-3xl = 24px */
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.12), 0 8px 20px -8px rgba(0,0,0,0.5);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   SCROLLBARS PERSONALIZADOS
+   ============================================ */
+
+/* Scrollbar global — sutil */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #1e2a3a; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #bc8cff40; }
+
+/* Custom scrollbar para secciones internas (utility class) */
+@media (min-width: 768px) {
+  .custom-scrollbar::-webkit-scrollbar       { width: 3px; }
+  .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+  .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(150,150,150,0.2); border-radius: 4px; }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(150,150,150,0.4); }
+}
+
+@media (max-width: 767px) {
+  .custom-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .custom-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* ============================================
+   SELECCIÓN DE TEXTO
+   ============================================ */
+
+::selection {
+  background: var(--color-selection-bg);
+  color: var(--color-selection-text);
+}
