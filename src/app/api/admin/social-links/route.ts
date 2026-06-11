@@ -3,6 +3,8 @@
 // ============================================
 
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
+
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/require-admin";
 import { z } from "zod";
@@ -51,6 +53,7 @@ export async function POST(request: NextRequest) {
     },
   });
 
+  revalidatePath("/");
   return NextResponse.json(created, { status: 201 });
 }
 
@@ -78,6 +81,7 @@ export async function PUT(request: NextRequest) {
     },
   });
 
+  revalidatePath("/");
   return NextResponse.json(updated);
 }
 

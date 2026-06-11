@@ -3,6 +3,8 @@
 // ============================================
 
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
+
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/require-admin";
 import { ProfileSchema } from "@/lib/validations";
@@ -44,7 +46,8 @@ export async function PUT(request: NextRequest) {
 
     if (!profile) {
       const created = await prisma.profile.create({ data });
-      return NextResponse.json(created, { status: 201 });
+      revalidatePath("/");
+  return NextResponse.json(created, { status: 201 });
     }
 
     const updated = await prisma.profile.update({
@@ -52,7 +55,8 @@ export async function PUT(request: NextRequest) {
       data,
     });
 
-    return NextResponse.json(updated);
+    revalidatePath("/");
+  return NextResponse.json(updated);
   } catch (error: any) {
     console.error("[API /admin/profile PUT] Error:", JSON.stringify(error, null, 2));
     return NextResponse.json(

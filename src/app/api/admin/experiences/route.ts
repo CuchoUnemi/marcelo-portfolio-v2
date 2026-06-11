@@ -3,6 +3,8 @@
 // ============================================
 
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
+
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/require-admin";
 import { ExperienceSchema } from "@/lib/validations";
@@ -39,6 +41,7 @@ export async function POST(request: NextRequest) {
     },
   });
 
+  revalidatePath("/");
   return NextResponse.json(experience, { status: 201 });
 }
 
@@ -71,6 +74,7 @@ export async function PUT(request: NextRequest) {
     },
   });
 
+  revalidatePath("/");
   return NextResponse.json(updated);
 }
 
@@ -87,5 +91,6 @@ export async function DELETE(request: NextRequest) {
   }
 
   await prisma.experience.delete({ where: { id } });
+  revalidatePath("/");
   return NextResponse.json({ message: "Eliminado" });
 }

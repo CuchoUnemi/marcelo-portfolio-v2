@@ -16,13 +16,7 @@ import SkillsSection from "@/components/SkillsSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import { StaggerContainer, StaggerItem } from "@/components/PageClientWrapper";
 
-import { unstable_noStore as noStore } from 'next/cache';
-
-export const dynamic = 'force-dynamic'; // Evita que Next.js guarde la página en caché para siempre
-export const revalidate = 0; // Garantiza que no haya caché de validación en Vercel Edge
-
 export default async function Home() {
-  noStore(); // Fuerza a Next.js a no usar caché de datos para Prisma
   const [profile, experiences, projects, skills, education, certifications, socialLinks] =
     await Promise.all([
       prisma.profile.findFirst(),

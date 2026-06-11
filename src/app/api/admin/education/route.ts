@@ -3,6 +3,8 @@
 // ============================================
 
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
+
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/require-admin";
 import { EducationSchema } from "@/lib/validations";
@@ -23,6 +25,7 @@ export async function POST(request: NextRequest) {
   const item = await prisma.education.create({
     data: { ...parsed.data, startDate: new Date(parsed.data.startDate), endDate: parsed.data.endDate ? new Date(parsed.data.endDate) : null },
   });
+  revalidatePath("/");
   return NextResponse.json(item, { status: 201 });
 }
 
@@ -38,6 +41,7 @@ export async function PUT(request: NextRequest) {
     where: { id },
     data: { ...parsed.data, startDate: new Date(parsed.data.startDate), endDate: parsed.data.endDate ? new Date(parsed.data.endDate) : null },
   });
+  revalidatePath("/");
   return NextResponse.json(updated);
 }
 
@@ -48,5 +52,6 @@ export async function DELETE(request: NextRequest) {
   const id = searchParams.get("id");
   if (!id) return NextResponse.json({ error: "ID requerido" }, { status: 400 });
   await prisma.education.delete({ where: { id } });
+  revalidatePath("/");
   return NextResponse.json({ message: "Eliminado" });
 }
