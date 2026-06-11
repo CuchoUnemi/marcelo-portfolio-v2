@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  revalidateTag("experiences");
+  revalidateTag("experiences", "max");
   return NextResponse.json(experience, { status: 201 });
 }
 
@@ -74,7 +74,7 @@ export async function PUT(request: NextRequest) {
     },
   });
 
-  revalidateTag("experiences");
+  revalidateTag("experiences", "max");
   return NextResponse.json(updated);
 }
 
@@ -91,6 +91,6 @@ export async function DELETE(request: NextRequest) {
   }
 
   await prisma.experience.delete({ where: { id } });
-  revalidateTag("experiences");
+  revalidateTag("experiences", "max");
   return NextResponse.json({ message: "Eliminado" });
 }

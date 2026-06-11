@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  revalidateTag("social-links");
+  revalidateTag("social-links", "max");
   return NextResponse.json(created, { status: 201 });
 }
 
@@ -81,7 +81,7 @@ export async function PUT(request: NextRequest) {
     },
   });
 
-  revalidateTag("social-links");
+  revalidateTag("social-links", "max");
   return NextResponse.json(updated);
 }
 

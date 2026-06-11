@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  revalidateTag("skill-categories");
+  revalidateTag("skill-categories", "max");
   return NextResponse.json(category, { status: 201 });
 }
 
@@ -49,7 +49,7 @@ export async function PUT(request: NextRequest) {
     },
   });
 
-  revalidateTag("skill-categories");
+  revalidateTag("skill-categories", "max");
   return NextResponse.json(updated);
 }
 
@@ -63,6 +63,6 @@ export async function DELETE(request: NextRequest) {
   if (!id) return NextResponse.json({ error: "ID requerido" }, { status: 400 });
 
   await prisma.skillCategory.delete({ where: { id } });
-  revalidateTag("skill-categories");
+  revalidateTag("skill-categories", "max");
   return NextResponse.json({ message: "Eliminado" });
 }

@@ -46,7 +46,7 @@ export async function PUT(request: NextRequest) {
 
     if (!profile) {
       const created = await prisma.profile.create({ data });
-      revalidateTag("profile");
+      revalidateTag("profile", "max");
   return NextResponse.json(created, { status: 201 });
     }
 
@@ -55,7 +55,7 @@ export async function PUT(request: NextRequest) {
       data,
     });
 
-    revalidateTag("profile");
+    revalidateTag("profile", "max");
   return NextResponse.json(updated);
   } catch (error: any) {
     console.error("[API /admin/profile PUT] Error:", JSON.stringify(error, null, 2));

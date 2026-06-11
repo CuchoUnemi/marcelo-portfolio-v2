@@ -36,9 +36,12 @@ const getProjects = unstable_cache(
 );
 
 const getSkills = unstable_cache(
-  async () => await prisma.skillCategory.findMany({
-    orderBy: { order: "asc" },
-    include: { skills: { orderBy: { order: "asc" } } },
+  async () => await prisma.skill.findMany({
+    include: { category: true },
+    orderBy: [
+      { category: { order: "asc" } },
+      { order: "asc" }
+    ],
   }),
   ['skills-query'],
   { tags: ['skills', 'skill-categories'] }

@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
   const item = await prisma.certification.create({
     data: { ...parsed.data, date: new Date(parsed.data.date) },
   });
-  revalidateTag("certifications");
+  revalidateTag("certifications", "max");
   return NextResponse.json(item, { status: 201 });
 }
 
@@ -42,7 +42,7 @@ export async function PUT(request: NextRequest) {
     where: { id },
     data: { ...parsed.data, date: new Date(parsed.data.date) },
   });
-  revalidateTag("certifications");
+  revalidateTag("certifications", "max");
   return NextResponse.json(updated);
 }
 
@@ -64,6 +64,6 @@ export async function DELETE(request: NextRequest) {
   }
 
   await prisma.certification.delete({ where: { id } });
-  revalidateTag("certifications");
+  revalidateTag("certifications", "max");
   return NextResponse.json({ message: "Eliminado" });
 }
