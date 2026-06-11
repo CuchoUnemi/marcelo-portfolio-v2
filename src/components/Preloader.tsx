@@ -89,7 +89,7 @@ const TechConstellation = () => {
               rotate: [0, 15, -15, 0]
             }}
             transition={{
-              duration: Math.random() * 10 + 10, // Entre 10s y 20s
+              duration: 10 + (tech.id.length % 10), // Entre 10s y 20s (consistente)
               repeat: Infinity,
               repeatType: "mirror",
               ease: "easeInOut",
