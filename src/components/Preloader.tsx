@@ -73,9 +73,9 @@ const TechConstellation = () => {
     <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
       {TECH_ICONS.map((tech) => {
         const Icon = tech.icon;
-        // Diferentes trayectorias para cada uno
-        const randomX = Math.floor(Math.random() * 80) - 40;
-        const randomY = Math.floor(Math.random() * 80) - 40;
+        // Valores consistentes (pseudo-aleatorios) para evitar errores de hidratación entre Servidor y Cliente
+        const pseudoRandomX = ((tech.id.length * 7) % 80) - 40;
+        const pseudoRandomY = (Math.floor(tech.delay * 100) % 80) - 40;
         
         return (
           <motion.div
@@ -84,8 +84,8 @@ const TechConstellation = () => {
             animate={{ 
               opacity: [0.3, 0.8, 0.3],
               scale: [1, 1.1, 1],
-              x: [0, randomX, 0],
-              y: [0, randomY, 0],
+              x: [0, pseudoRandomX, 0],
+              y: [0, pseudoRandomY, 0],
               rotate: [0, 15, -15, 0]
             }}
             transition={{
