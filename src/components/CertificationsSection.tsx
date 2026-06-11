@@ -108,7 +108,7 @@ export default function CertificationsSection({ certifications }: Props) {
               {/* Fecha y link (Alineada a la derecha, fija) */}
               <div className="flex flex-col items-end gap-1 flex-shrink-0">
                   <span className="text-xs font-mono text-[var(--color-certifications)]/80">
-                      {new Date(cert.date).getFullYear()}
+                      {new Date(cert.date).getUTCFullYear()}
                   </span>
                   {(cert.url || cert.fileUrl) && (
                     <button

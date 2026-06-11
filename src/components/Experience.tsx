@@ -23,9 +23,14 @@ interface ExperienceProps {
   experiences: ExperienceItem[];
 }
 
+const MONTHS = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+
 function formatPeriod(start: string | Date, end?: string | Date | null): string {
-  const fmt = (d: string | Date) =>
-    new Date(d).toLocaleDateString("es-EC", { month: "short", year: "numeric" });
+  const fmt = (d: string | Date) => {
+    const date = new Date(d);
+    // getUTCMonth and getUTCFullYear prevent timezone shift hydration mismatches
+    return `${MONTHS[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
+  };
   return `${fmt(start)} — ${end ? fmt(end) : "Presente"}`;
 }
 

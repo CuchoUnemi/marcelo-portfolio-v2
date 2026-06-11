@@ -94,12 +94,12 @@ export default function AdminDashboard() {
           throw new Error("El servidor devolvió una respuesta no válida.");
         }
       }
-      
+
       if (!res.ok) {
         console.error("Error API:", res.status, json);
         return;
       }
-      
+
       setData(json);
     } catch (error) {
       console.error("Error cargando datos:", error);
@@ -121,7 +121,7 @@ export default function AdminDashboard() {
   const handleDelete = (id: string) => {
     const isVisitorsAll = activeTab === "visitors" && id === "";
     const title = isVisitorsAll ? "Borrar Historial Completo" : "Eliminar Elemento";
-    const message = isVisitorsAll 
+    const message = isVisitorsAll
       ? "¿Estás seguro de que deseas borrar TODO el registro de visitas? Esta acción es irreversible."
       : "¿Estás seguro de que deseas eliminar esto permanentemente?";
 
@@ -208,11 +208,10 @@ export default function AdminDashboard() {
                   setShowForm(false);
                   setEditItem(null);
                 }}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all cursor-pointer ${
-                  activeTab === tab.key
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all cursor-pointer ${activeTab === tab.key
                     ? "bg-primary/10 text-primary border border-primary/20"
                     : "text-foreground/60 hover:bg-foreground/5 hover:text-foreground"
-                }`}
+                  }`}
               >
                 <span>{tab.icon}</span>
                 {tab.label}
@@ -317,7 +316,7 @@ export default function AdminDashboard() {
             >
               <h3 className="text-xl font-bold mb-2">{modal.title}</h3>
               <p className="text-foreground/70 mb-6 whitespace-pre-wrap">{modal.message}</p>
-              
+
               <div className="flex gap-3 justify-end">
                 {modal.type === "confirm" ? (
                   <>
@@ -588,11 +587,10 @@ function ItemList({
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setSelectedCategory(null)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-                selectedCategory === null 
-                  ? "bg-primary text-white shadow-md shadow-primary/20" 
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${selectedCategory === null
+                  ? "bg-primary text-white shadow-md shadow-primary/20"
                   : "bg-foreground/5 text-foreground/70 hover:bg-foreground/10"
-              }`}
+                }`}
             >
               Todas
             </button>
@@ -600,11 +598,10 @@ function ItemList({
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-                  selectedCategory === cat 
-                    ? "bg-primary text-white shadow-md shadow-primary/20" 
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${selectedCategory === cat
+                    ? "bg-primary text-white shadow-md shadow-primary/20"
                     : "bg-foreground/5 text-foreground/70 hover:bg-foreground/10"
-                }`}
+                  }`}
               >
                 {cat}
               </button>
@@ -632,10 +629,10 @@ function ItemList({
                   {Boolean(item.iconUrl || item.imageUrl) && (
                     <div className="shrink-0 w-8 h-8 rounded-lg bg-background border border-card-border flex items-center justify-center p-1.5 overflow-hidden">
                       {((item.iconUrl || item.imageUrl) as string).startsWith("http") || ((item.iconUrl || item.imageUrl) as string).startsWith("/") ? (
-                        <img 
-                          src={(item.iconUrl || item.imageUrl) as string} 
-                          alt="Media" 
-                          className="w-full h-full object-contain" 
+                        <img
+                          src={(item.iconUrl || item.imageUrl) as string}
+                          alt="Media"
+                          className="w-full h-full object-contain"
                         />
                       ) : (
                         <i className={`${(item.iconUrl || item.imageUrl)} text-lg text-foreground/80`} />
@@ -646,7 +643,7 @@ function ItemList({
                     {getLabel(item)}
                   </h4>
                 </div>
-                
+
                 {getSubLabel(item) && (
                   <p className="text-xs text-text-secondary mt-1 truncate" title={getSubLabel(item) || undefined}>
                     {getSubLabel(item)}
@@ -663,7 +660,7 @@ function ItemList({
                   </span>
                 )}
                 {Boolean(item.fileUrl) && (
-                  <button 
+                  <button
                     onClick={() => setPdfPreview(item.fileUrl as string)}
                     className="inline-block mt-2 ml-2 px-2 py-0.5 rounded text-[10px] font-mono bg-blue-500/10 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors cursor-pointer"
                   >
@@ -671,7 +668,7 @@ function ItemList({
                   </button>
                 )}
               </div>
-              
+
               <div className="flex gap-2 mt-4 pt-3 border-t border-foreground/5 opacity-80 group-hover:opacity-100 transition-opacity">
                 <button
                   onClick={() => onEdit(item)}
@@ -748,9 +745,9 @@ function CrudForm({
       for (const [key, file] of Object.entries(pendingFiles)) {
         // Borrar el viejo si existía
         if (item && typeof form[key] === "string" && (form[key] as string).startsWith("http")) {
-          await fetch(`/api/upload?url=${encodeURIComponent(form[key] as string)}`, { method: "DELETE" }).catch(() => {});
+          await fetch(`/api/upload?url=${encodeURIComponent(form[key] as string)}`, { method: "DELETE" }).catch(() => { });
         }
-        
+
         // Subir el nuevo
         const res = await fetch(`/api/upload?filename=${encodeURIComponent(file.name)}`, {
           method: "POST",
@@ -797,7 +794,7 @@ function CrudForm({
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
         className="relative w-full max-w-2xl bg-background border border-foreground/10 rounded-3xl p-6 sm:p-8 shadow-2xl my-auto"
       >
-        <button 
+        <button
           onClick={onCancel}
           className="absolute top-6 right-6 p-2 text-foreground/40 hover:text-foreground hover:bg-foreground/5 rounded-full transition-colors cursor-pointer"
         >
@@ -805,154 +802,154 @@ function CrudForm({
         </button>
         <h3 className="text-xl font-bold mb-6 pr-8">{item ? "Editar Elemento" : "Crear Nuevo Elemento"}</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {fields.map((field) => (
-          <div key={field.key} className={field.fullWidth ? "md:col-span-2" : ""}>
-            {field.type === "textarea" ? (
-              <>
-                <label className="block text-sm font-medium text-foreground/70 mb-1.5">{field.label}</label>
-                <textarea
-                  value={(form[field.key] as string) || ""}
-                  onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
-                  rows={4}
-                  className="w-full px-4 py-3 rounded-xl bg-foreground/5 border border-foreground/10 text-foreground focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all resize-none"
-                />
-              </>
-            ) : field.type === "select" && type === "skills" ? (
-              <>
-                <label className="block text-sm font-medium text-foreground/70 mb-1.5">{field.label}</label>
-                <select
-                  value={(form[field.key] as string) || ""}
-                  onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-background border border-foreground/10 text-foreground focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all appearance-none"
-                >
-                  <option value="" className="bg-background text-foreground">Selecciona una categoría...</option>
-                  {categories.map((c) => (
-                    <option key={c.id} value={c.id} className="bg-background text-foreground">{c.name}</option>
-                  ))}
-                </select>
-              </>
-            ) : field.type === "checkbox" ? (
-              <label className="flex items-center gap-2 cursor-pointer mt-6">
-                <input
-                  type="checkbox"
-                  checked={form[field.key] === true || form[field.key] === "true"}
-                  onChange={(e) => setForm({ ...form, [field.key]: e.target.checked })}
-                  className="w-4 h-4 rounded accent-primary"
-                />
-                <span className="text-sm font-medium text-foreground/70">{field.label}</span>
-              </label>
-            ) : field.type === "file" ? (
-              <div className="flex flex-col gap-2 mt-1">
-                <label className="block text-sm font-medium text-foreground/70">{field.label}</label>
-                <div className="flex flex-col gap-3 items-start">
-                  <label className="cursor-pointer inline-flex items-center justify-center px-4 py-2.5 bg-primary/10 text-primary hover:bg-primary/20 rounded-xl text-sm font-semibold transition-colors">
-                    <span>Seleccionar archivo PDF...</span>
-                    <input
-                      type="file"
-                      accept={(field as any).accept}
-                      onChange={async (e) => {
-                        const file = e.target.files?.[0];
-                        if (!file) return;
-                        setPendingFiles({ ...pendingFiles, [field.key]: file });
-                      }}
-                      className="hidden"
-                    />
-                  </label>
-                  
-                  {/* Si hay un nuevo archivo seleccionado pendiente por subir */}
-                  {pendingFiles[field.key] && (
-                    <div className="flex items-center gap-4 bg-yellow-500/10 px-4 py-2 rounded-lg w-full justify-between border border-yellow-500/20">
-                      <span className="text-sm text-yellow-500 font-medium truncate">
-                        📎 {pendingFiles[field.key].name} (Pendiente)
-                      </span>
-                      <button 
-                        type="button"
-                        onClick={() => {
-                          const newPending = { ...pendingFiles };
-                          delete newPending[field.key];
-                          setPendingFiles(newPending);
+          {fields.map((field) => (
+            <div key={field.key} className={field.fullWidth ? "md:col-span-2" : ""}>
+              {field.type === "textarea" ? (
+                <>
+                  <label className="block text-sm font-medium text-foreground/70 mb-1.5">{field.label}</label>
+                  <textarea
+                    value={(form[field.key] as string) || ""}
+                    onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
+                    rows={4}
+                    className="w-full px-4 py-3 rounded-xl bg-foreground/5 border border-foreground/10 text-foreground focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all resize-none"
+                  />
+                </>
+              ) : field.type === "select" && type === "skills" ? (
+                <>
+                  <label className="block text-sm font-medium text-foreground/70 mb-1.5">{field.label}</label>
+                  <select
+                    value={(form[field.key] as string) || ""}
+                    onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
+                    className="w-full px-4 py-3 rounded-xl bg-background border border-foreground/10 text-foreground focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all appearance-none"
+                  >
+                    <option value="" className="bg-background text-foreground">Selecciona una categoría...</option>
+                    {categories.map((c) => (
+                      <option key={c.id} value={c.id} className="bg-background text-foreground">{c.name}</option>
+                    ))}
+                  </select>
+                </>
+              ) : field.type === "checkbox" ? (
+                <label className="flex items-center gap-2 cursor-pointer mt-6">
+                  <input
+                    type="checkbox"
+                    checked={form[field.key] === true || form[field.key] === "true"}
+                    onChange={(e) => setForm({ ...form, [field.key]: e.target.checked })}
+                    className="w-4 h-4 rounded accent-primary"
+                  />
+                  <span className="text-sm font-medium text-foreground/70">{field.label}</span>
+                </label>
+              ) : field.type === "file" ? (
+                <div className="flex flex-col gap-2 mt-1">
+                  <label className="block text-sm font-medium text-foreground/70">{field.label}</label>
+                  <div className="flex flex-col gap-3 items-start">
+                    <label className="cursor-pointer inline-flex items-center justify-center px-4 py-2.5 bg-primary/10 text-primary hover:bg-primary/20 rounded-xl text-sm font-semibold transition-colors">
+                      <span>Seleccionar archivo PDF...</span>
+                      <input
+                        type="file"
+                        accept={(field as any).accept}
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (!file) return;
+                          setPendingFiles({ ...pendingFiles, [field.key]: file });
                         }}
-                        className="text-xs text-red-500 hover:text-red-600 hover:underline cursor-pointer font-bold px-2 py-1 bg-red-500/10 rounded-md transition-colors"
-                      >
-                        Descartar
-                      </button>
-                    </div>
-                  )}
+                        className="hidden"
+                      />
+                    </label>
 
-                  {/* Si ya existe un archivo en base de datos y no se ha seleccionado uno nuevo */}
-                  {form[field.key] && !pendingFiles[field.key] && (
-                    <div className="flex items-center gap-4 bg-foreground/5 px-4 py-2 rounded-lg w-full justify-between">
-                      <button 
-                        type="button"
-                        onClick={() => setPdfPreview(form[field.key] as string)}
-                        className="text-sm text-primary hover:underline font-medium cursor-pointer"
-                      >
-                        Ver PDF actual
-                      </button>
-                      <button 
-                        type="button"
-                        onClick={() => {
-                          setModal({
-                            type: "confirm",
-                            title: "Eliminar Archivo",
-                            message: "¿Borrar permanentemente este archivo del almacenamiento en la nube? Se actualizará este elemento inmediatamente.",
-                            onConfirm: async () => {
-                              setModal(null);
-                              try {
-                                await fetch(`/api/upload?url=${encodeURIComponent(form[field.key] as string)}`, { method: "DELETE" });
-                              } catch(e) {
-                                console.error("Error", e);
-                              }
-                              
-                              const newForm = { ...form, [field.key]: "" };
-                              setForm(newForm);
+                    {/* Si hay un nuevo archivo seleccionado pendiente por subir */}
+                    {pendingFiles[field.key] && (
+                      <div className="flex items-center gap-4 bg-yellow-500/10 px-4 py-2 rounded-lg w-full justify-between border border-yellow-500/20">
+                        <span className="text-sm text-yellow-500 font-medium truncate">
+                          📎 {pendingFiles[field.key].name} (Pendiente)
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newPending = { ...pendingFiles };
+                            delete newPending[field.key];
+                            setPendingFiles(newPending);
+                          }}
+                          className="text-xs text-red-500 hover:text-red-600 hover:underline cursor-pointer font-bold px-2 py-1 bg-red-500/10 rounded-md transition-colors"
+                        >
+                          Descartar
+                        </button>
+                      </div>
+                    )}
 
-                              if (item) {
-                                const processed: Record<string, unknown> = { id: item.id };
-                                for (const [k, v] of Object.entries(newForm)) {
-                                  let val = v as string;
-                                  if (k.toLowerCase().includes("url") && val?.trim() !== "" && !val?.startsWith("http")) {
-                                    val = "https://" + val.trim();
-                                  }
-                                  processed[k] = val === "" ? null : val;
+                    {/* Si ya existe un archivo en base de datos y no se ha seleccionado uno nuevo */}
+                    {form[field.key] && !pendingFiles[field.key] && (
+                      <div className="flex items-center gap-4 bg-foreground/5 px-4 py-2 rounded-lg w-full justify-between">
+                        <button
+                          type="button"
+                          onClick={() => setPdfPreview(form[field.key] as string)}
+                          className="text-sm text-primary hover:underline font-medium cursor-pointer"
+                        >
+                          Ver PDF actual
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setModal({
+                              type: "confirm",
+                              title: "Eliminar Archivo",
+                              message: "¿Borrar permanentemente este archivo del almacenamiento en la nube? Se actualizará este elemento inmediatamente.",
+                              onConfirm: async () => {
+                                setModal(null);
+                                try {
+                                  await fetch(`/api/upload?url=${encodeURIComponent(form[field.key] as string)}`, { method: "DELETE" });
+                                } catch (e) {
+                                  console.error("Error", e);
                                 }
-                                onSave(processed);
+
+                                const newForm = { ...form, [field.key]: "" };
+                                setForm(newForm);
+
+                                if (item) {
+                                  const processed: Record<string, unknown> = { id: item.id };
+                                  for (const [k, v] of Object.entries(newForm)) {
+                                    let val = v as string;
+                                    if (k.toLowerCase().includes("url") && val?.trim() !== "" && !val?.startsWith("http")) {
+                                      val = "https://" + val.trim();
+                                    }
+                                    processed[k] = val === "" ? null : val;
+                                  }
+                                  onSave(processed);
+                                }
                               }
-                            }
-                          });
-                        }}
-                        className="text-xs text-red-500 hover:text-red-600 hover:underline cursor-pointer font-bold px-2 py-1 bg-red-500/10 rounded-md transition-colors"
-                      >
-                        Eliminar PDF
-                      </button>
-                    </div>
-                  )}
+                            });
+                          }}
+                          className="text-xs text-red-500 hover:text-red-600 hover:underline cursor-pointer font-bold px-2 py-1 bg-red-500/10 rounded-md transition-colors"
+                        >
+                          Eliminar PDF
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <InputField
-                label={field.label}
-                type={field.type}
-                value={String(form[field.key] ?? "")}
-                onChange={(v) => setForm({ ...form, [field.key]: v })}
-                helpText={field.helpText}
-              />
-            )}
-          </div>
-        ))}
-      </div>
-      <div className="flex gap-3 mt-8 pt-6 border-t border-foreground/10 justify-end">
-        <button onClick={onCancel} className="px-5 py-2.5 rounded-xl text-sm font-medium text-foreground/60 hover:bg-foreground/5 transition-colors cursor-pointer">
-          Cancelar
-        </button>
-        <button
-          onClick={handleSubmit}
-          disabled={isSubmitting}
-          className="px-5 py-2.5 bg-primary text-white rounded-xl text-sm font-medium hover:bg-primary-hover transition-all shadow-lg shadow-primary/20 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isSubmitting ? "Guardando..." : (item ? "Actualizar Elemento" : "Crear Elemento")}
-        </button>
-      </div>
+              ) : (
+                <InputField
+                  label={field.label}
+                  type={field.type}
+                  value={String(form[field.key] ?? "")}
+                  onChange={(v) => setForm({ ...form, [field.key]: v })}
+                  helpText={field.helpText}
+                />
+              )}
+            </div>
+          ))}
+        </div>
+        <div className="flex gap-3 mt-8 pt-6 border-t border-foreground/10 justify-end">
+          <button onClick={onCancel} className="px-5 py-2.5 rounded-xl text-sm font-medium text-foreground/60 hover:bg-foreground/5 transition-colors cursor-pointer">
+            Cancelar
+          </button>
+          <button
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+            className="px-5 py-2.5 bg-primary text-white rounded-xl text-sm font-medium hover:bg-primary-hover transition-all shadow-lg shadow-primary/20 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isSubmitting ? "Guardando..." : (item ? "Actualizar Elemento" : "Crear Elemento")}
+          </button>
+        </div>
       </motion.div>
     </div>
   );
@@ -1043,10 +1040,10 @@ function getFieldsForType(type: string): FieldDef[] {
         { key: "name", label: "Nombre" },
         { key: "categoryId", label: "Categoría", type: "select" },
         { key: "level", label: "Nivel (0-100)", type: "number" },
-        { 
-          key: "iconUrl", 
-          label: "Icono (URL o Clase)", 
-          helpText: <p className="text-xs text-foreground/50">Ej: "devicon-react-original" o "https://..." (Encuentra en <a href="https://devicon.dev/" target="_blank" className="text-primary hover:underline">Devicon.dev</a>)</p> 
+        {
+          key: "iconUrl",
+          label: "Icono (URL o Clase)",
+          helpText: <p className="text-xs text-foreground/50">Ej: "devicon-react-original" o "https://..." (Encuentra en <a href="https://devicon.dev/" target="_blank" className="text-primary hover:underline">Devicon.dev</a>)</p>
         },
         { key: "order", label: "Orden", type: "number" },
       ];

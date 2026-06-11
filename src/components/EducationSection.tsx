@@ -78,8 +78,8 @@ export default function EducationSection({ education }: Props) {
                       )}
                     </div>
                     <span className="text-xs text-text-secondary font-mono whitespace-nowrap mt-1 sm:mt-0">
-                      {new Date(edu.startDate).getFullYear()} —{" "}
-                      {edu.endDate ? new Date(edu.endDate).getFullYear() : "Presente"}
+                      {new Date(edu.startDate).getUTCFullYear()} —{" "}
+                      {edu.endDate ? new Date(edu.endDate).getUTCFullYear() : "Presente"}
                     </span>
                   </div>
 
