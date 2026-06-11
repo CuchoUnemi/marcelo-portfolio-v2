@@ -3,7 +3,7 @@
 // ============================================
 
 import { NextRequest, NextResponse } from "next/server";
-import { revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/require-admin";
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  revalidateTag("projects", "max");
+  revalidatePath('/', 'layout');
   return NextResponse.json(project, { status: 201 });
 }
 
@@ -69,7 +69,7 @@ export async function PUT(request: NextRequest) {
     },
   });
 
-  revalidateTag("projects", "max");
+  revalidatePath('/', 'layout');
   return NextResponse.json(updated);
 }
 
@@ -83,6 +83,6 @@ export async function DELETE(request: NextRequest) {
   if (!id) return NextResponse.json({ error: "ID requerido" }, { status: 400 });
 
   await prisma.project.delete({ where: { id } });
-  revalidateTag("projects", "max");
+  revalidatePath('/', 'layout');
   return NextResponse.json({ message: "Eliminado" });
 }

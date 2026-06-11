@@ -132,6 +132,7 @@ export default function AdminDashboard() {
       onConfirm: async () => {
         setModal(null);
         await fetch(`/api/admin/${activeTab}?id=${id}`, { method: "DELETE" });
+        router.refresh();
         fetchData();
       }
     });
@@ -149,6 +150,7 @@ export default function AdminDashboard() {
     });
 
     if (res.ok) {
+      router.refresh();
       setShowForm(false);
       setEditItem(null);
       fetchData();

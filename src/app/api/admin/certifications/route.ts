@@ -3,7 +3,7 @@
 // ============================================
 
 import { NextRequest, NextResponse } from "next/server";
-import { revalidateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/require-admin";
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
   const item = await prisma.certification.create({
     data: { ...parsed.data, date: new Date(parsed.data.date) },
   });
-  revalidateTag("certifications", "max");
+  revalidatePath('/', 'layout');
   return NextResponse.json(item, { status: 201 });
 }
 
@@ -42,7 +42,7 @@ export async function PUT(request: NextRequest) {
     where: { id },
     data: { ...parsed.data, date: new Date(parsed.data.date) },
   });
-  revalidateTag("certifications", "max");
+  revalidatePath('/', 'layout');
   return NextResponse.json(updated);
 }
 
@@ -64,6 +64,6 @@ export async function DELETE(request: NextRequest) {
   }
 
   await prisma.certification.delete({ where: { id } });
-  revalidateTag("certifications", "max");
+  revalidatePath('/', 'layout');
   return NextResponse.json({ message: "Eliminado" });
 }

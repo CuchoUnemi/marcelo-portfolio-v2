@@ -15,66 +15,25 @@ import CertificationsSection from "@/components/CertificationsSection";
 import SkillsSection from "@/components/SkillsSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import { StaggerContainer, StaggerItem } from "@/components/PageClientWrapper";
-import { unstable_cache } from "next/cache";
-
-const getProfile = unstable_cache(
-  async () => await prisma.profile.findFirst(),
-  ['profile-query'],
-  { tags: ['profile'] }
-);
-
-const getExperiences = unstable_cache(
-  async () => await prisma.experience.findMany({ orderBy: { order: "asc" } }),
-  ['experiences-query'],
-  { tags: ['experiences'] }
-);
-
-const getProjects = unstable_cache(
-  async () => await prisma.project.findMany({ orderBy: { order: "asc" } }),
-  ['projects-query'],
-  { tags: ['projects'] }
-);
-
-const getSkills = unstable_cache(
-  async () => await prisma.skill.findMany({
-    include: { category: true },
-    orderBy: [
-      { category: { order: "asc" } },
-      { order: "asc" }
-    ],
-  }),
-  ['skills-query'],
-  { tags: ['skills', 'skill-categories'] }
-);
-
-const getEducation = unstable_cache(
-  async () => await prisma.education.findMany({ orderBy: { order: "asc" } }),
-  ['education-query'],
-  { tags: ['education'] }
-);
-
-const getCertifications = unstable_cache(
-  async () => await prisma.certification.findMany({ orderBy: { order: "asc" } }),
-  ['certifications-query'],
-  { tags: ['certifications'] }
-);
-
-const getSocialLinks = unstable_cache(
-  async () => await prisma.socialLink.findMany({ orderBy: { order: "asc" } }),
-  ['social-links-query'],
-  { tags: ['social-links'] }
-);
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function Home() {
   const [profile, experiences, projects, skills, education, certifications, socialLinks] =
     await Promise.all([
-      getProfile(),
-      getExperiences(),
-      getProjects(),
-      getSkills(),
-      getEducation(),
-      getCertifications(),
-      getSocialLinks(),
+      prisma.profile.findFirst(),
+      prisma.experience.findMany({ orderBy: { order: "asc" } }),
+      prisma.project.findMany({ orderBy: { order: "asc" } }),
+      prisma.skill.findMany({
+        include: { category: true },
+        orderBy: [
+          { category: { order: "asc" } },
+          { order: "asc" }
+        ],
+      }),
+      prisma.education.findMany({ orderBy: { order: "asc" } }),
+      prisma.certification.findMany({ orderBy: { order: "asc" } }),
+      prisma.socialLink.findMany({ orderBy: { order: "asc" } }),
     ]);
 
   if (!profile) {
