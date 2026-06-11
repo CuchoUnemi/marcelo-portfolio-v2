@@ -78,7 +78,8 @@ export default function AdminDashboard() {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/admin/${activeTab}`);
+      // Usar cache: 'no-store' y un timestamp para forzar al navegador a obtener datos frescos
+      const res = await fetch(`/api/admin/${activeTab}?t=${Date.now()}`, { cache: "no-store" });
       if (res.status === 401) {
         router.push("/admin/login");
         return;
