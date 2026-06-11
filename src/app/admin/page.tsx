@@ -132,6 +132,7 @@ export default function AdminDashboard() {
       onConfirm: async () => {
         setModal(null);
         await fetch(`/api/admin/${activeTab}?id=${id}`, { method: "DELETE" });
+        await fetch("/api/admin/revalidate", { method: "POST" });
         fetchData();
       }
     });
@@ -149,6 +150,7 @@ export default function AdminDashboard() {
     });
 
     if (res.ok) {
+      await fetch("/api/admin/revalidate", { method: "POST" });
       setShowForm(false);
       setEditItem(null);
       fetchData();
