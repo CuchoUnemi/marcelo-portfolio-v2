@@ -111,6 +111,7 @@ export default function AdminLogin() {
                 type="email"
                 required
                 value={form.email}
+                autoComplete="username"
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 className="w-full px-4 py-3 rounded-xl bg-foreground/5 border border-foreground/10 text-foreground placeholder-foreground/30 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all"
                 placeholder="admin@marceloromero.dev"
@@ -126,6 +127,7 @@ export default function AdminLogin() {
                 type="password"
                 required
                 value={form.password}
+                autoComplete="current-password"
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                 className="w-full px-4 py-3 rounded-xl bg-foreground/5 border border-foreground/10 text-foreground placeholder-foreground/30 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all"
                 placeholder="••••••••"
