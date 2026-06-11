@@ -80,12 +80,7 @@ export const CertificationSchema = z.object({
 });
 
 // --- CONTACT MESSAGE ---
-export const ContactMessageSchema = z.object({
-  name: z.string().min(2, "El nombre es requerido").max(100),
-  email: z.string().email("Email inválido"),
-  subject: z.string().max(200).optional().nullable(),
-  message: z.string().min(10, "El mensaje debe tener al menos 10 caracteres").max(5000),
-});
+// Eliminado a petición del usuario
 
 // --- ADMIN LOGIN ---
 export const AdminLoginSchema = z.object({
