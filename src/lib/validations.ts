@@ -14,12 +14,7 @@ import { z } from "zod";
 export const ProfileSchema = z.object({
   fullName: z.string().min(2, "El nombre debe tener al menos 2 caracteres").max(100),
   title: z.string().min(2).max(150),
-  email: z.string().email("Email inválido"),
-  phone: z.string().max(20).optional().nullable(),
   location: z.string().max(100).optional().nullable(),
-  githubUrl: z.string().url("URL de GitHub inválida").optional().nullable().or(z.literal("")),
-  linkedinUrl: z.string().url("URL de LinkedIn inválida").optional().nullable().or(z.literal("")),
-  websiteUrl: z.string().url("URL inválida").optional().nullable().or(z.literal("")),
   bio: z.string().min(2, "El extracto debe tener al menos 2 caracteres").max(2000),
   aboutMe: z.string().max(5000).optional().nullable().or(z.literal("")),
   avatarUrl: z.string().url().optional().nullable().or(z.literal("")),
