@@ -16,6 +16,8 @@ import SkillsSection from "@/components/SkillsSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import { StaggerContainer, StaggerItem } from "@/components/PageClientWrapper";
 
+export const dynamic = 'force-dynamic'; // Evita que Next.js guarde la página en caché para siempre
+
 export default async function Home() {
   const [profile, experiences, projects, skills, education, certifications, socialLinks] =
     await Promise.all([
