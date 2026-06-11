@@ -3,7 +3,6 @@
 // ============================================
 
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
 
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/require-admin";
@@ -38,7 +37,6 @@ export async function POST(request: NextRequest) {
   }
 
   const skill = await prisma.skill.create({ data: parsed.data });
-  revalidatePath('/', 'layout');
   return NextResponse.json(skill, { status: 201 });
 }
 
@@ -60,7 +58,6 @@ export async function PUT(request: NextRequest) {
   }
 
   const updated = await prisma.skill.update({ where: { id }, data: parsed.data });
-  revalidatePath('/', 'layout');
   return NextResponse.json(updated);
 }
 
@@ -74,6 +71,5 @@ export async function DELETE(request: NextRequest) {
   if (!id) return NextResponse.json({ error: "ID requerido" }, { status: 400 });
 
   await prisma.skill.delete({ where: { id } });
-  revalidatePath('/', 'layout');
   return NextResponse.json({ message: "Eliminado" });
 }
