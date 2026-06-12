@@ -238,23 +238,16 @@ export function Preloader({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Si ya vio el preloader en esta sesión, lo saltamos para no castigar el LCP en navegaciones repetidas
-    if (sessionStorage.getItem("preloader_shown")) {
-      setLoading(false);
-      return;
-    }
-
     // Bloquear scroll mientras carga
     if (loading) {
       document.body.style.overflow = "hidden";
     }
 
-    // Tiempo de exhibición reducido de 2800 a 1800 para equilibrar animación y LCP
+    // Tiempo de exhibición ajustado a 2400 para permitir que la animación se disfrute
     const timer = setTimeout(() => {
-      sessionStorage.setItem("preloader_shown", "true");
       setLoading(false);
       document.body.style.overflow = "";
-    }, 1800);
+    }, 2400);
 
     return () => {
       clearTimeout(timer);
@@ -288,7 +281,7 @@ export function Preloader({ children }: { children: React.ReactNode }) {
               <motion.div
                 initial={{ opacity: 0, scale: 0.5, filter: "blur(20px)" }}
                 animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                 className="text-7xl md:text-9xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-cyan-400 via-indigo-400 to-pink-500 drop-shadow-[0_0_30px_rgba(168,85,247,0.4)]"
               >
                 M R
@@ -299,7 +292,7 @@ export function Preloader({ children }: { children: React.ReactNode }) {
                 <motion.div
                   initial={{ width: "0%" }}
                   animate={{ width: "100%" }}
-                  transition={{ duration: 1.2, ease: "easeInOut", delay: 0.2 }}
+                  transition={{ duration: 1.8, ease: "easeInOut", delay: 0.3 }}
                   className="absolute left-0 top-0 h-full bg-gradient-to-r from-cyan-400 via-indigo-500 to-pink-500 shadow-[0_0_15px_rgba(99,102,241,0.8)]"
                 />
               </div>
@@ -307,7 +300,7 @@ export function Preloader({ children }: { children: React.ReactNode }) {
               <motion.span 
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.4 }}
+                transition={{ delay: 0.8, duration: 0.5 }}
                 className="mt-6 text-xs md:text-sm font-mono tracking-[0.3em] text-foreground/50 uppercase"
               >
                 Iniciando Sistema
