@@ -46,8 +46,8 @@ export default function ProjectsSection({ projects }: Props) {
     const checkScroll = () => {
       if (scrollRef.current) {
         const { scrollHeight, clientHeight } = scrollRef.current;
-        setHasScroll(scrollHeight > clientHeight + 5);
-        if (scrollHeight <= clientHeight + 5) {
+        setHasScroll(scrollHeight > clientHeight + 20);
+        if (scrollHeight <= clientHeight + 20) {
           setIsAtBottom(true);
         } else {
           const isBottom = scrollHeight - scrollRef.current.scrollTop <= clientHeight + 10;
@@ -56,14 +56,15 @@ export default function ProjectsSection({ projects }: Props) {
       }
     };
 
-    const timer = setTimeout(checkScroll, 100);
     checkScroll();
 
-    window.addEventListener("resize", checkScroll);
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("resize", checkScroll);
-    };
+    const observer = new ResizeObserver(() => checkScroll());
+    if (scrollRef.current) {
+      observer.observe(scrollRef.current);
+      Array.from(scrollRef.current.children).forEach(child => observer.observe(child));
+    }
+
+    return () => observer.disconnect();
   }, [projects]);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {

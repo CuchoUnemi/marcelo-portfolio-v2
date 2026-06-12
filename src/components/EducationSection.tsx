@@ -31,9 +31,9 @@ export default function EducationSection({ education }: Props) {
     const checkScroll = () => {
       if (scrollRef.current) {
         const { scrollHeight, clientHeight } = scrollRef.current;
-        // Tolerancia de 5px para sub-píxeles
-        setHasScroll(scrollHeight > clientHeight + 5);
-        if (scrollHeight <= clientHeight + 5) {
+        // Aumentamos la tolerancia a 20px para ignorar paddings o sub-píxeles
+        setHasScroll(scrollHeight > clientHeight + 20);
+        if (scrollHeight <= clientHeight + 20) {
           setIsAtBottom(true);
         } else {
           const isBottom = scrollHeight - scrollRef.current.scrollTop <= clientHeight + 10;
@@ -42,15 +42,17 @@ export default function EducationSection({ education }: Props) {
       }
     };
 
-    // Timeout para esperar a que los estilos/fuentes carguen completamente
-    const timer = setTimeout(checkScroll, 100);
     checkScroll();
 
-    window.addEventListener("resize", checkScroll);
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("resize", checkScroll);
-    };
+    // Usar ResizeObserver para recalcular automáticamente cuando cambien los estilos, fuentes o la ventana
+    const observer = new ResizeObserver(() => checkScroll());
+    if (scrollRef.current) {
+      observer.observe(scrollRef.current);
+      // Observar a los hijos por si cambian de tamaño sin afectar al padre (si ya llegó al max-h)
+      Array.from(scrollRef.current.children).forEach(child => observer.observe(child));
+    }
+
+    return () => observer.disconnect();
   }, [education]);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
