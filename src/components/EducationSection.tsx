@@ -83,11 +83,11 @@ export default function EducationSection({ education }: Props) {
               className="flex flex-col gap-4 max-h-[320px] overflow-y-auto pr-2 overflow-x-hidden pb-8 custom-scrollbar"
             >
               {education.map((edu, i) => (
-                <AnimateOnScroll key={edu.id} delay={i * 0.1}>
-                  <motion.div 
-                    whileHover={{ x: 6, scale: 1.01 }}
-                    className="p-4 rounded-xl bg-card/40 border border-transparent transition-all duration-300 group relative overflow-hidden hover:border-primary hover:bg-primary/10 hover:shadow-[0_0_15px_color-mix(in_srgb,var(--color-primary)_15%,transparent)]"
-                  >
+                <motion.div 
+                  key={edu.id}
+                  whileHover={{ x: 6, scale: 1.01 }}
+                  className="p-4 rounded-xl bg-card/40 border border-transparent transition-all duration-300 group relative overflow-hidden hover:border-primary hover:bg-primary/10 hover:shadow-[0_0_15px_color-mix(in_srgb,var(--color-primary)_15%,transparent)]"
+                >
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-2">
                     <div>
                       <h4 className="text-lg font-bold group-hover:text-primary transition-colors leading-tight">{edu.degree}</h4>
@@ -106,8 +106,7 @@ export default function EducationSection({ education }: Props) {
                   {edu.description && (
                     <p className="text-text-secondary leading-snug text-sm">{edu.description}</p>
                   )}
-                  </motion.div>
-                </AnimateOnScroll>
+                </motion.div>
               ))}
             </div>
 

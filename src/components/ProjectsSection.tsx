@@ -96,11 +96,11 @@ export default function ProjectsSection({ projects }: Props) {
               className="grid grid-cols-1 md:grid-cols-2 gap-6 max-h-[320px] overflow-y-auto pr-2 custom-scrollbar pb-8"
             >
               {projects.map((project, i) => (
-                <AnimateOnScroll key={project.id} delay={i * 0.1}>
-                  <motion.article 
-                    whileHover={{ x: 6, scale: 1.01 }}
-                    className="group relative h-full rounded-xl bg-card border border-card-border overflow-hidden transition-all duration-500 flex flex-col hover:border-secondary hover:bg-secondary/10 hover:shadow-[0_0_15px_color-mix(in_srgb,var(--color-secondary)_15%,transparent)]"
-                  >
+                <motion.article 
+                  key={project.id}
+                  whileHover={{ x: 6, scale: 1.01 }}
+                  className="group relative h-full rounded-xl bg-card border border-card-border overflow-hidden transition-all duration-500 flex flex-col hover:border-secondary hover:bg-secondary/10 hover:shadow-[0_0_15px_color-mix(in_srgb,var(--color-secondary)_15%,transparent)]"
+                >
                   {/* Imagen del proyecto (si existe) */}
                   {project.imageUrl && (
                     <div className="relative h-48 overflow-hidden shrink-0 border-b border-card-border/50">
@@ -168,9 +168,8 @@ export default function ProjectsSection({ projects }: Props) {
 
                   {/* Efecto de brillo al hover interno adicional */}
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none bg-gradient-to-br from-secondary/10 via-transparent to-transparent" />
-                  </motion.article>
-              </AnimateOnScroll>
-            ))}
+                </motion.article>
+              ))}
             </div>
             
             {/* Scroll Indicator */}
