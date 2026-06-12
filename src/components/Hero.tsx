@@ -139,7 +139,7 @@ export default function Hero({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.32 }}
-                className="mt-2.5 text-xs text-text-secondary leading-relaxed line-clamp-2"
+                className="mt-2.5 text-xs text-text-secondary leading-relaxed"
               >
                 {shortBio}
               </motion.p>
