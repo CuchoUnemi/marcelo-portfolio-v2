@@ -116,7 +116,7 @@ export default function Hero({
                 className="flex items-center gap-2 mt-1.5"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-[#bc8cff] shadow-[0_0_6px_#bc8cff] animate-pulse flex-shrink-0" />
-                <span className="text-sm font-bold text-[#bc8cff] tracking-wide truncate">{title}</span>
+                <span className="text-sm font-bold text-[#bc8cff] tracking-wide">{title}</span>
               </motion.div>
             )}
 

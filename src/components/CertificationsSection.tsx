@@ -114,10 +114,10 @@ export default function CertificationsSection({ certifications }: Props) {
 
               {/* Contenedor de Textos (Flex-1 para empujar la fecha) */}
               <div className="flex-1 min-w-0">
-                  <h4 className="text-base md:text-lg font-bold text-foreground truncate block group-hover:text-[var(--color-certifications)] transition-colors">
+                  <h4 className="text-base md:text-lg font-bold text-foreground group-hover:text-[var(--color-certifications)] transition-colors leading-tight">
                       {cert.title}
                   </h4>
-                  <p className="text-sm text-text-secondary truncate block mt-0.5">
+                  <p className="text-sm text-text-secondary mt-0.5 leading-snug">
                       {cert.issuer}
                   </p>
               </div>
