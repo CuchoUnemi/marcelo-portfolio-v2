@@ -15,7 +15,8 @@ export async function GET() {
     }
 
     const userAgent = headersList.get("user-agent") || "";
-    const city = headersList.get("x-vercel-ip-city") || null;
+    const rawCity = headersList.get("x-vercel-ip-city");
+    const city = rawCity ? decodeURIComponent(rawCity) : null;
     const country = headersList.get("x-vercel-ip-country") || null;
 
     let deviceType = "Computadora";
