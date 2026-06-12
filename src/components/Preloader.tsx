@@ -238,17 +238,23 @@ export function Preloader({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Si ya vio el preloader en esta sesión, lo saltamos para no castigar el LCP en navegaciones repetidas
+    if (sessionStorage.getItem("preloader_shown")) {
+      setLoading(false);
+      return;
+    }
+
     // Bloquear scroll mientras carga
     if (loading) {
       document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
     }
 
-    // Tiempo de exhibición del splash screen
+    // Tiempo de exhibición reducido de 2800 a 1400 para mejorar Core Web Vitals (LCP)
     const timer = setTimeout(() => {
+      sessionStorage.setItem("preloader_shown", "true");
       setLoading(false);
-    }, 2800);
+      document.body.style.overflow = "";
+    }, 1400);
 
     return () => {
       clearTimeout(timer);
@@ -262,11 +268,11 @@ export function Preloader({ children }: { children: React.ReactNode }) {
         {loading && (
           <motion.div
             key="preloader"
-            // Animación de salida: Desvanecimiento suave y zoom in
+            // Animación de salida más rápida para no bloquear LCP
             exit={{ 
               opacity: 0, 
-              scale: 1.1, 
-              transition: { duration: 0.8, ease: "easeInOut" } 
+              scale: 1.05, 
+              transition: { duration: 0.4, ease: "easeInOut" } 
             }}
             className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#010409] overflow-hidden"
           >
