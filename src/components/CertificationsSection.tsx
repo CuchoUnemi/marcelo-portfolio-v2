@@ -33,13 +33,27 @@ export default function CertificationsSection({ certifications }: Props) {
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
 
   useEffect(() => {
-    if (scrollRef.current) {
-      const { scrollHeight, clientHeight } = scrollRef.current;
-      setHasScroll(scrollHeight > clientHeight);
-      if (scrollHeight <= clientHeight) {
-        setIsAtBottom(true);
+    const checkScroll = () => {
+      if (scrollRef.current) {
+        const { scrollHeight, clientHeight } = scrollRef.current;
+        setHasScroll(scrollHeight > clientHeight + 5);
+        if (scrollHeight <= clientHeight + 5) {
+          setIsAtBottom(true);
+        } else {
+          const isBottom = scrollHeight - scrollRef.current.scrollTop <= clientHeight + 10;
+          setIsAtBottom(isBottom);
+        }
       }
-    }
+    };
+
+    const timer = setTimeout(checkScroll, 100);
+    checkScroll();
+
+    window.addEventListener("resize", checkScroll);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", checkScroll);
+    };
   }, [certifications]);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {

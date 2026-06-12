@@ -28,13 +28,29 @@ export default function EducationSection({ education }: Props) {
   const [hasScroll, setHasScroll] = useState(false);
 
   useEffect(() => {
-    if (scrollRef.current) {
-      const { scrollHeight, clientHeight } = scrollRef.current;
-      setHasScroll(scrollHeight > clientHeight);
-      if (scrollHeight <= clientHeight) {
-        setIsAtBottom(true);
+    const checkScroll = () => {
+      if (scrollRef.current) {
+        const { scrollHeight, clientHeight } = scrollRef.current;
+        // Tolerancia de 5px para sub-píxeles
+        setHasScroll(scrollHeight > clientHeight + 5);
+        if (scrollHeight <= clientHeight + 5) {
+          setIsAtBottom(true);
+        } else {
+          const isBottom = scrollHeight - scrollRef.current.scrollTop <= clientHeight + 10;
+          setIsAtBottom(isBottom);
+        }
       }
-    }
+    };
+
+    // Timeout para esperar a que los estilos/fuentes carguen completamente
+    const timer = setTimeout(checkScroll, 100);
+    checkScroll();
+
+    window.addEventListener("resize", checkScroll);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", checkScroll);
+    };
   }, [education]);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {

@@ -40,13 +40,27 @@ export default function Experience({ experiences }: ExperienceProps) {
   const [hasScroll, setHasScroll] = useState(false);
 
   useEffect(() => {
-    if (scrollRef.current) {
-      const { scrollHeight, clientHeight } = scrollRef.current;
-      setHasScroll(scrollHeight > clientHeight);
-      if (scrollHeight <= clientHeight) {
-        setIsAtBottom(true);
+    const checkScroll = () => {
+      if (scrollRef.current) {
+        const { scrollHeight, clientHeight } = scrollRef.current;
+        setHasScroll(scrollHeight > clientHeight + 5);
+        if (scrollHeight <= clientHeight + 5) {
+          setIsAtBottom(true);
+        } else {
+          const isBottom = scrollHeight - scrollRef.current.scrollTop <= clientHeight + 10;
+          setIsAtBottom(isBottom);
+        }
       }
-    }
+    };
+
+    const timer = setTimeout(checkScroll, 100);
+    checkScroll();
+
+    window.addEventListener("resize", checkScroll);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", checkScroll);
+    };
   }, [experiences]);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
