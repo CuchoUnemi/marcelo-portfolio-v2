@@ -29,11 +29,13 @@ export default function CertificationsSection({ certifications }: Props) {
   const [isMobile, setIsMobile] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isAtBottom, setIsAtBottom] = useState(false);
+  const [hasScroll, setHasScroll] = useState(false);
   const [selectedPdf, setSelectedPdf] = useState<string | null>(null);
 
   useEffect(() => {
     if (scrollRef.current) {
       const { scrollHeight, clientHeight } = scrollRef.current;
+      setHasScroll(scrollHeight > clientHeight);
       if (scrollHeight <= clientHeight) {
         setIsAtBottom(true);
       }
@@ -126,9 +128,11 @@ export default function CertificationsSection({ certifications }: Props) {
         </div>
         
         {/* Scroll Indicator */}
-        <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-card to-transparent pointer-events-none flex items-end justify-center pb-1">
-          <ChevronDown size={20} className={`animate-bounce text-[var(--color-certifications)]/60 transition-transform duration-300 ${isAtBottom ? 'rotate-180' : 'rotate-0'}`} />
-        </div>
+        {hasScroll && (
+          <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-card to-transparent pointer-events-none flex items-end justify-center pb-1">
+            <ChevronDown size={20} className={`animate-bounce text-[var(--color-certifications)]/60 transition-transform duration-300 ${isAtBottom ? 'rotate-180' : 'rotate-0'}`} />
+          </div>
+        )}
       </div>
 
       {/* Visor de PDF Modal con Portal para evadir overflow-hidden */}

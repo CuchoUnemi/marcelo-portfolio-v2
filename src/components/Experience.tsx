@@ -37,10 +37,12 @@ function formatPeriod(start: string | Date, end?: string | Date | null): string 
 export default function Experience({ experiences }: ExperienceProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isAtBottom, setIsAtBottom] = useState(false);
+  const [hasScroll, setHasScroll] = useState(false);
 
   useEffect(() => {
     if (scrollRef.current) {
       const { scrollHeight, clientHeight } = scrollRef.current;
+      setHasScroll(scrollHeight > clientHeight);
       if (scrollHeight <= clientHeight) {
         setIsAtBottom(true);
       }
@@ -133,9 +135,11 @@ export default function Experience({ experiences }: ExperienceProps) {
         </div>
         
         {/* Scroll Indicator */}
-        <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-card to-transparent pointer-events-none flex items-end justify-center pb-2">
-          <ChevronDown className={`animate-bounce text-[var(--color-experience)] w-6 h-6 opacity-70 transition-transform duration-300 ${isAtBottom ? 'rotate-180' : 'rotate-0'}`} />
-        </div>
+        {hasScroll && (
+          <div className="absolute bottom-0 left-0 w-full h-16 bg-gradient-to-t from-card to-transparent pointer-events-none flex items-end justify-center pb-2">
+            <ChevronDown className={`animate-bounce text-[var(--color-experience)] w-6 h-6 opacity-70 transition-transform duration-300 ${isAtBottom ? 'rotate-180' : 'rotate-0'}`} />
+          </div>
+        )}
       </div>
     </motion.div>
   );

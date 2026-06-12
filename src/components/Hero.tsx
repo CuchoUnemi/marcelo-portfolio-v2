@@ -46,7 +46,7 @@ export default function Hero({
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const linkTarget = isMobile ? "_blank" : "_self";
+  const linkTarget = "_blank";
 
   return (
     <motion.div
