@@ -13,60 +13,62 @@
 
 :root, .light {
   /* Fondos - Light Mode */
-  --color-bg-body:      #ffffff;
-  --color-bg-card:      #f8fafc;
-  --color-border-card:  #e2e8f0;
+  /* Tonos suaves para superficies limpias */
+  --color-bg-body:      #f4f7fb;
+  --color-bg-card:      #e6eff8; /* Solicitado: superficies limpias */
+  --color-border-card:  #d3e0ed;
 
   /* Textos - Light Mode */
-  --color-text-main:       #0f172a;
-  --color-text-secondary:  #475569;
+  --color-text-main:       #04103a; /* Solicitado: profundidad para acentos/textos */
+  --color-text-secondary:  #4b5c85;
 
   /* Selección de texto */
-  --color-selection-bg:    color-mix(in srgb, var(--color-biography) 15%, transparent);
-  --color-selection-text:  #0f172a;
+  --color-selection-bg:    #04103a33;
+  --color-selection-text:  #04103a;
 
-  /* Acentos por sección (Compartidos o adaptados) */
-  --color-biography:        #9b51e0;   /* Lila más oscuro para contraste */
-  --color-experience:       #00b4d8;   /* Cian más oscuro */
-  --color-education:        #0284c7;   /* Azul Cielo más oscuro */
-  --color-certifications:   #e11d48;   /* Rosa/Rojo oscuro */
-  --color-skills:           #059669;   /* Verde Esmeralda oscuro */
+  /* Acentos (Refinados para contraste sobre claro) */
+  --color-biography:        #4f46e5;   /* Indigo 600 */
+  --color-experience:       #0284c7;   /* Sky 600 */
+  --color-education:        #2563eb;   /* Blue 600 */
+  --color-certifications:   #e11d48;   /* Rose 600 */
+  --color-skills:           #059669;   /* Emerald 600 */
 
-  /* Alias compatibles con componentes Tailwind */
-  --secondary: #9b51e0;
+  /* Alias */
+  --secondary: #4f46e5;
   --accent:    #e11d48;
 }
 
 .dark {
   /* Fondos - Dark Mode */
-  --color-bg-body:      #010409;
-  --color-bg-card:      #101524;
-  --color-border-card:  #1e2a3a;
+  /* Punto de anclaje oscuro profundo */
+  --color-bg-body:      #02081f; /* Más oscuro que el card para dar contraste */
+  --color-bg-card:      #04103a; /* Solicitado: profundidad */
+  --color-border-card:  #132560;
 
   /* Textos - Dark Mode */
-  --color-text-main:       #e6eff8;
-  --color-text-secondary:  #7d8590;
+  --color-text-main:       #e6eff8; /* Solicitado: contraste perfecto */
+  --color-text-secondary:  #8fa4ce;
 
   /* Selección de texto */
-  --color-selection-bg:    #bc8cff33;
-  --color-selection-text:  #e6eff8;
+  --color-selection-bg:    #e6eff833;
+  --color-selection-text:  #ffffff;
 
-  /* Acentos originales de alto contraste para fondo oscuro */
-  --color-biography:        #bc8cff;   
-  --color-experience:       #00f2ff;   
-  --color-education:        #38bdf8;   
-  --color-certifications:   #f43f5e;   
-  --color-skills:           #10b981;   
+  /* Acentos (Vibrantes para resaltar sobre fondo navy oscuro) */
+  --color-biography:        #818cf8;   /* Indigo 400 */
+  --color-experience:       #38bdf8;   /* Sky 400 */
+  --color-education:        #60a5fa;   /* Blue 400 */
+  --color-certifications:   #fb7185;   /* Rose 400 */
+  --color-skills:           #34d399;   /* Emerald 400 */
 
-  --secondary: #bc8cff;
-  --accent:    #f43f5e;
+  --secondary: #818cf8;
+  --accent:    #fb7185;
 }
 
 @theme inline {
   --color-background:     var(--color-bg-body);
   --color-foreground:     var(--color-text-main);
   --color-primary:        var(--color-biography);
-  --color-primary-hover:  #a370f0;
+  --color-primary-hover:  color-mix(in srgb, var(--color-primary) 80%, white);
   --color-secondary:      var(--secondary);
   --color-accent:         var(--accent);
   --color-card:           var(--color-bg-card);
@@ -88,7 +90,9 @@ body {
   background: var(--color-bg-body);
   color: var(--color-text-main);
   font-family: var(--font-sans), system-ui, sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  /* Transición ultra fluida para evitar parpadeos bruscos entre temas */
+  transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+              color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Tarjeta Premium */
@@ -96,8 +100,18 @@ body {
   background-color: var(--color-bg-card);
   border: 1px solid var(--color-border-card);
   border-radius: 1.5rem;   /* rounded-3xl = 24px */
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.12), 0 8px 20px -8px rgba(0,0,0,0.5);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Sombra sutil por defecto para modo claro */
+  box-shadow: 0 4px 20px -2px rgba(4, 16, 58, 0.05);
+  /* Transiciones fluidas para interactividad base */
+  transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.4s ease-out;
+}
+
+.dark .premium-card {
+  /* Sombra profunda y contorno iluminado para el modo oscuro navy */
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.05), 
+              0 10px 30px -10px rgba(0, 0, 0, 0.6);
 }
 
 /* ============================================
