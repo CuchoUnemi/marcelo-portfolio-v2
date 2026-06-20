@@ -18,8 +18,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// SEO: Metadatos globales
+// SEO: Metadatos globales y GEO Tags para posicionamiento local
 export const metadata: Metadata = {
+  metadataBase: new URL("https://mrcucho.vercel.app"),
   title: "Marcelo Romero | Desarrollador de Software & IA",
   description:
     "Portafolio profesional de Marcelo Alberto Romero Jara. Desarrollador de Software especializado en Inteligencia Artificial, Computer Vision, NLP y arquitecturas escalables.",
@@ -30,10 +31,12 @@ export const metadata: Metadata = {
     "Computer Vision",
     "NLP",
     "Python",
-    "TensorFlow",
     "React",
     "Next.js",
     "Ecuador",
+    "Milagro",
+    "Guayas",
+    "Programador Ecuador",
   ],
   authors: [{ name: "Marcelo Alberto Romero Jara" }],
   openGraph: {
@@ -42,6 +45,8 @@ export const metadata: Metadata = {
       "Portafolio profesional. Especializado en IA, Computer Vision y desarrollo web moderno.",
     type: "website",
     locale: "es_EC",
+    url: "/",
+    siteName: "Portafolio de Marcelo Romero",
   },
   twitter: {
     card: "summary_large_image",
@@ -52,7 +57,24 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
+  alternates: {
+    canonical: "/",
+  },
+  other: {
+    // GEO Tags para SEO Local (Ecuador, Milagro/Guayas)
+    "geo.region": "EC-G", 
+    "geo.placename": "Milagro", 
+    "geo.position": "-2.1333;-79.5833", 
+    "ICBM": "-2.1333, -79.5833"
+  }
 };
 
 export default function RootLayout({
@@ -60,6 +82,35 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Schema.org JSON-LD para Person/LocalBusiness SEO
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Marcelo Alberto Romero Jara",
+    "jobTitle": "Desarrollador de Software e Ingeniero de IA",
+    "url": "https://mrcucho.vercel.app",
+    "sameAs": [
+      "https://github.com/CuchoUnemi",
+      "https://www.linkedin.com/in/tu-perfil" // Actualiza con tu LinkedIn
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Milagro",
+      "addressRegion": "Guayas",
+      "addressCountry": "EC"
+    },
+    "knowsAbout": [
+      "Inteligencia Artificial",
+      "Computer Vision",
+      "Natural Language Processing",
+      "Desarrollo Web Frontend",
+      "Desarrollo Backend",
+      "Next.js",
+      "React",
+      "Python"
+    ]
+  };
+
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
@@ -67,6 +118,11 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
         {/* Devicon CDN para iconos de lenguajes/tecnologías */}
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+        {/* Schema.org JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
