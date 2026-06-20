@@ -113,7 +113,7 @@ export default async function Home() {
       ],
       "sameAs": [
         socialLinks.find(l => l.platform.toLowerCase() === 'github')?.url || "https://github.com/CuchoUnemi",
-        socialLinks.find(l => l.platform.toLowerCase() === 'linkedin')?.url || "https://www.linkedin.com/in/tu-perfil"
+        socialLinks.find(l => l.platform.toLowerCase() === 'linkedin')?.url || "https://www.linkedin.com/in/marcelo-romeroaj"
       ]
     }
   };
@@ -121,7 +121,7 @@ export default async function Home() {
   return (
     // ── CONTENEDOR RAÍZ: scroll libre, fondo espacial ──
     <div className="min-h-screen bg-background text-foreground font-sans relative transition-colors duration-300">
-      
+
       {/* Script JSON-LD para SEO y optimización de IAs */}
       <script
         type="application/ld+json"

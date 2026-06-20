@@ -91,7 +91,7 @@ export default function RootLayout({
     "url": "https://mrcucho.vercel.app",
     "sameAs": [
       "https://github.com/CuchoUnemi",
-      "https://www.linkedin.com/in/tu-perfil" // Actualiza con tu LinkedIn
+      "https://www.linkedin.com/in/marcelo-romeroaj"
     ],
     "address": {
       "@type": "PostalAddress",
