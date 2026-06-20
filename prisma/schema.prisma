@@ -127,3 +127,11 @@ model VisitorLog {
   lastVisit  DateTime @default(now())
   createdAt  DateTime @default(now())
 }
+
+model SoftSkill {
+  id        String   @id @default(cuid())
+  name      String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

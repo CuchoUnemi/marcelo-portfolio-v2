@@ -6,6 +6,8 @@
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, ExternalLink } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
+import ElectricBorder from "./ui/ElectricBorder";
 
 interface SocialLink {
   id: string;
@@ -37,6 +39,7 @@ export default function Hero({
     .join("")
     .toUpperCase();
 
+  const { resolvedTheme } = useTheme();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -58,14 +61,21 @@ export default function Hero({
       /* ── Centrada, ancho máximo controlado ── */
       className="w-full max-w-2xl mx-auto flex-shrink-0 z-10"
     >
-      <div className="
-        w-full rounded-3xl
-        bg-card/80 backdrop-blur-md
-        border border-primary/20
-        shadow-2xl shadow-black/5 dark:shadow-black/50
-        hover:border-primary/45
-        transition-all duration-400 overflow-hidden
-      ">
+      <ElectricBorder
+        color={resolvedTheme === "light" ? "#7e22ce" : "#bc8cff"} // Morado más oscuro/saturado en modo claro
+        speed={1.5}
+        chaos={0.15}
+        borderRadius={24}
+        className="w-full"
+      >
+        <div className="
+          w-full rounded-3xl
+          bg-card/80 backdrop-blur-md
+          border border-primary/20
+          shadow-2xl shadow-black/5 dark:shadow-black/50
+          hover:border-primary/45
+          transition-all duration-400 overflow-hidden
+        ">
 
         {/* ── BLOQUE SUPERIOR: foto izq. + nombre/info der. ── */}
         <div className="flex flex-row items-center gap-6 px-7 pt-6 pb-5">
@@ -191,8 +201,8 @@ export default function Hero({
             );
           })}
         </motion.div>
-
-      </div>
+        </div>
+      </ElectricBorder>
     </motion.div>
   );
 }

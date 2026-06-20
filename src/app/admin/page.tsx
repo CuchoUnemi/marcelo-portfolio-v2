@@ -17,7 +17,7 @@ interface GenericItem {
   [key: string]: unknown;
 }
 
-import { User, Briefcase, Rocket, Zap, GraduationCap, Award, Settings, Tags, Activity, Trash2, Search, X } from "lucide-react";
+import { User, Briefcase, Rocket, Zap, GraduationCap, Award, Settings, Tags, Activity, Trash2, Search, X, Sparkles } from "lucide-react";
 
 // Tabs del admin
 const TABS = [
@@ -27,6 +27,7 @@ const TABS = [
   { key: "projects", label: "Proyectos", icon: <Rocket size={18} /> },
   { key: "skill-categories", label: "Cat. Habilidades", icon: <Tags size={18} /> },
   { key: "skills", label: "Habilidades", icon: <Zap size={18} /> },
+  { key: "soft-skills", label: "Hab. Blandas", icon: <Sparkles size={18} /> },
   { key: "education", label: "Educación", icon: <GraduationCap size={18} /> },
   { key: "certifications", label: "Certificaciones", icon: <Award size={18} /> },
   { key: "visitors", label: "Visitas", icon: <Activity size={18} /> },
@@ -534,6 +535,7 @@ function ItemList({
     if (type === "projects") return item.title as string;
     if (type === "skill-categories") return item.name as string;
     if (type === "skills") return item.name as string;
+    if (type === "soft-skills") return item.name as string;
     if (type === "education") return `${item.degree} - ${item.institution}`;
     if (type === "certifications") return `${item.title} - ${item.issuer}`;
     return item.id;
@@ -1047,6 +1049,11 @@ function getFieldsForType(type: string): FieldDef[] {
         },
         { key: "order", label: "Orden", type: "number" },
       ];
+    case "soft-skills":
+      return [
+        { key: "name", label: "Nombre" },
+        { key: "order", label: "Orden", type: "number" },
+      ];
     case "education":
       return [
         { key: "institution", label: "Institución" },
@@ -1085,6 +1092,8 @@ function getDefaultForm(type: string): Record<string, string | number | boolean>
       return { name: "", order: 0 };
     case "skills":
       return { name: "", categoryId: "", level: 80, iconUrl: "", order: 0 };
+    case "soft-skills":
+      return { name: "", order: 0 };
     case "education":
       return { institution: "", degree: "", fieldOfStudy: "", startDate: "", endDate: "", description: "", order: 0 };
     case "certifications":

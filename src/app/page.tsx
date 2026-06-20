@@ -14,12 +14,14 @@ import EducationSection from "@/components/EducationSection";
 import CertificationsSection from "@/components/CertificationsSection";
 import SkillsSection from "@/components/SkillsSection";
 import ProjectsSection from "@/components/ProjectsSection";
+import SoftSkillsCard from "@/components/SoftSkillsCard";
+import PixelBlast from "@/components/ui/PixelBlast";
 import { StaggerContainer, StaggerItem } from "@/components/PageClientWrapper";
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function Home() {
-  const [profile, experiences, projects, skills, education, certifications, socialLinks] =
+  const [profile, experiences, projects, skills, softSkills, education, certifications, socialLinks] =
     await Promise.all([
       prisma.profile.findFirst(),
       prisma.experience.findMany({ orderBy: { order: "asc" } }),
@@ -31,6 +33,7 @@ export default async function Home() {
           { order: "asc" }
         ],
       }),
+      prisma.softSkill.findMany({ orderBy: { order: "asc" } }),
       prisma.education.findMany({ orderBy: { order: "asc" } }),
       prisma.certification.findMany({ orderBy: { order: "asc" } }),
       prisma.socialLink.findMany({ orderBy: { order: "asc" } }),
@@ -53,6 +56,29 @@ export default async function Home() {
   return (
     // ── CONTENEDOR RAÍZ: scroll libre, fondo espacial ──
     <div className="min-h-screen bg-background text-foreground font-sans relative transition-colors duration-300">
+
+      {/* Fondo interactivo PixelBlast */}
+      <div className="fixed inset-0 z-0">
+        <PixelBlast
+          variant="square"
+          pixelSize={4}
+          color="#B497CF"
+          patternScale={2}
+          patternDensity={1}
+          pixelSizeJitter={0}
+          enableRipples
+          rippleSpeed={0.4}
+          rippleThickness={0.12}
+          rippleIntensityScale={1.5}
+          liquid={false}
+          liquidStrength={0.12}
+          liquidRadius={1.2}
+          liquidWobbleSpeed={5}
+          speed={0.5}
+          edgeFade={0.25}
+          transparent
+        />
+      </div>
 
       {/* Glows decorativos de fondo dinámicos */}
       <div className="fixed top-0 right-1/3 w-[700px] h-[700px] bg-primary/10 rounded-full blur-[160px] pointer-events-none z-0 transition-colors" />
@@ -102,6 +128,11 @@ export default async function Home() {
               </div>
             </StaggerItem>
             <StaggerItem><CertificationsSection certifications={certifications} /></StaggerItem>
+            <StaggerItem>
+              <div style={{ "--color-skills": "#10b981" } as React.CSSProperties}>
+                <SoftSkillsCard skills={softSkills} />
+              </div>
+            </StaggerItem>
           </div>
         </div>
 

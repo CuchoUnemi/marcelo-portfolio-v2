@@ -41,12 +41,17 @@ export const EducationSchema = z.object({
   order: z.number().int().min(0).default(0),
 });
 
-// --- SKILL ---
+// --- SKILLS & CATEGORIES ---
+export const SkillCategorySchema = z.object({
+  name: z.string().trim().min(2, "El nombre debe tener al menos 2 caracteres").max(100),
+  order: z.number().int().min(0).default(0),
+});
+
 export const SkillSchema = z.object({
-  name: z.string().min(1, "El nombre es requerido").max(50),
+  name: z.string().trim().min(1, "El nombre es requerido").max(50),
   categoryId: z.string().min(1, "La categoría es requerida"),
   level: z.number().int().min(0).max(100).default(80),
-  iconUrl: z.string().optional().nullable().or(z.literal("")),
+  iconUrl: z.string().trim().optional().nullable().or(z.literal("")),
   order: z.number().int().min(0).default(0),
 });
 
@@ -81,4 +86,10 @@ export const CertificationSchema = z.object({
 export const AdminLoginSchema = z.object({
   email: z.string().email("Email inválido"),
   password: z.string().min(8, "La contraseña debe tener al menos 8 caracteres"),
+});
+
+// --- SOFT SKILL & KEYWORDS ATS ---
+export const SoftSkillSchema = z.object({
+  name: z.string().trim().min(2, "El nombre debe tener al menos 2 caracteres").max(100, "Máximo 100 caracteres"),
+  order: z.number().int().min(0).default(0),
 });
