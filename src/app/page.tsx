@@ -5,6 +5,7 @@
 // Centrado en eje, max-w-[1200px], gap generoso.
 // ============================================
 
+import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
@@ -17,8 +18,33 @@ import ProjectsSection from "@/components/ProjectsSection";
 import SoftSkillsCard from "@/components/SoftSkillsCard";
 import PixelBlast from "@/components/ui/PixelBlast";
 import { StaggerContainer, StaggerItem } from "@/components/PageClientWrapper";
+
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+// ============================================
+// METADATOS SEO Y GEO PARA IA (PÁGINA PRINCIPAL)
+// ============================================
+export const metadata: Metadata = {
+  title: "Marcelo Romero | Ingeniero de IA & Desarrollador de Software",
+  description: "Portafolio profesional de Marcelo Romero. Especialista en IA, Django, Next.js, React y arquitecturas escalables. Optimizando soluciones tecnológicas en Ecuador.",
+  authors: [{ name: "Marcelo Romero", url: "https://mrcucho.vercel.app" }],
+  openGraph: {
+    type: "profile",
+    firstName: "Marcelo",
+    lastName: "Romero",
+    username: "mrcucho",
+    title: "Marcelo Romero | Ingeniero IA & Full Stack",
+    description: "Portafolio profesional. Experto en Inteligencia Artificial, Django y Next.js.",
+    url: "https://mrcucho.vercel.app",
+    siteName: "Portafolio de Marcelo Romero",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Marcelo Romero | Ingeniero IA & Full Stack",
+    description: "Portafolio profesional. Experto en Inteligencia Artificial, Django y Next.js.",
+  },
+};
 
 export default async function Home() {
   const [profile, experiences, projects, skills, softSkills, education, certifications, socialLinks] =
@@ -53,9 +79,54 @@ export default async function Home() {
     );
   }
 
+  // ============================================
+  // DATOS ESTRUCTURADOS JSON-LD (PROFILE PAGE & PERSON)
+  // ============================================
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "dateCreated": "2024-01-01T00:00:00Z",
+    "dateModified": new Date().toISOString(),
+    "mainEntity": {
+      "@type": "Person",
+      "name": profile.fullName,
+      "alternateName": "mrcucho",
+      "jobTitle": profile.title,
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Milagro",
+        "addressCountry": "Ecuador"
+      },
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Universidad Estatal de Milagro (UNEMI)"
+      },
+      "knowsAbout": [
+        "Inteligencia Artificial",
+        "Django",
+        "Next.js",
+        "React",
+        "Computer Vision",
+        "Python",
+        "NLP",
+        ...skills.map(s => s.name)
+      ],
+      "sameAs": [
+        socialLinks.find(l => l.platform.toLowerCase() === 'github')?.url || "https://github.com/CuchoUnemi",
+        socialLinks.find(l => l.platform.toLowerCase() === 'linkedin')?.url || "https://www.linkedin.com/in/tu-perfil"
+      ]
+    }
+  };
+
   return (
     // ── CONTENEDOR RAÍZ: scroll libre, fondo espacial ──
     <div className="min-h-screen bg-background text-foreground font-sans relative transition-colors duration-300">
+      
+      {/* Script JSON-LD para SEO y optimización de IAs */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
       {/* Fondo interactivo PixelBlast */}
       <div className="fixed inset-0 z-0">
