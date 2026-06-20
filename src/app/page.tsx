@@ -112,8 +112,8 @@ export default async function Home() {
         ...skills.map(s => s.name)
       ],
       "sameAs": [
-        socialLinks.find(l => l.platform.toLowerCase() === 'github')?.url || "https://github.com/CuchoUnemi",
-        socialLinks.find(l => l.platform.toLowerCase() === 'linkedin')?.url || "https://www.linkedin.com/in/marcelo-romeroaj"
+        socialLinks.find(l => l.label.toLowerCase() === 'github')?.url || "https://github.com/CuchoUnemi",
+        socialLinks.find(l => l.label.toLowerCase() === 'linkedin')?.url || "https://www.linkedin.com/in/marcelo-romeroaj"
       ]
     }
   };
